@@ -1,0 +1,10 @@
+# local-only helpers: reference non-public participant data paths
+_local/
+
+# Defensive: this repository must never contain participant-level records.
+# The deployed page embeds fitted model parameters only. These patterns keep a
+# stray copy of the research build's data out of a push.
+data/
+*.csv
+heldout*
+*_cases.json
