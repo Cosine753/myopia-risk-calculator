@@ -8,3 +8,19 @@ data/
 *.csv
 heldout*
 *_cases.json
+
+# Private analysis materials: keep research code and source data out of the
+# public calculator repository.
+07_SOURCE_DATA/
+08_ANALYSIS_CODE/
+*.py
+*.ipynb
+*.r
+*.R
+*.xlsx
+*.xls
+*.parquet
+*.pkl
+*.rds
+*.sav
+*.dta
