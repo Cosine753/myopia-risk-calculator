@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>儿童近视与干眼共病问卷风险分层计算器 | Vision Triage</title>
-<meta name="description" content="基于锁定两阶段Logistic模型的儿童近视及近视–干眼共病问卷风险分层研究演示工具。所有计算在浏览器本地完成，不上传、不保存任何输入。" />
+<title>Childhood myopia and myopia–dry eye comorbidity calculator | Vision Triage</title>
+  <meta name="description" content="Stage 1 and Stage 2 logistic calculator for childhood myopia and myopia–dry eye comorbidity questionnaire items." />
 <meta name="robots" content="index, follow" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b776e'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E" />
 <style>
@@ -246,16 +246,14 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
 <body>
 <main>
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="返回页面顶部">
+    <a class="brand" href="#top">
       <span class="brand-mark">V</span>
       <span>
         <strong>Vision Triage</strong>
-        <small>Questionnaire research demo</small>
+        <small>Two-stage questionnaire calculator</small>
       </span>
     </a>
-    <div class="header-badges" aria-label="网站特性">
-      <span>本地计算</span>
-      <span>不保存输入</span>
+    <div class="header-badges" aria-label="Model version">
       <span>Model v2026.07</span>
     </div>
   </header>
@@ -263,17 +261,17 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
   <section class="hero" id="top">
     <div class="hero-copy">
       <p class="kicker">Pediatric vision risk stratification</p>
-      <h1>儿童近视与干眼共病<br />问卷风险分层计算器</h1>
+      <h1>Childhood myopia and myopia–dry eye comorbidity<br />questionnaire calculator</h1>
       <p class="hero-intro">
-        输入15项非侵入性问卷信息，获得两阶段模型概率及三分类风险分层结果。
-        所有计算均在当前浏览器中完成。
+          Enter 15 questionnaire items to obtain Stage 1 and Stage 2 probabilities
+          and the linked three-category assignment.
       </p>
       <div class="hero-actions">
-        <a class="primary-link" href="#calculator">开始评估</a>
-        <a class="text-link" href="#method">查看模型说明 <span aria-hidden="true">→</span></a>
+        <a class="primary-link" href="#calculator">Start</a>
+        <a class="text-link" href="#method">Model description <span aria-hidden="true">→</span></a>
       </div>
     </div>
-    <aside class="hero-card" aria-label="两阶段模型概览">
+    <aside class="hero-card" aria-label="Two-stage model overview">
       <div class="hero-card-top">
         <span>Two-stage pathway</span>
         <span class="status-dot">Locked</span>
@@ -281,8 +279,8 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       <div class="pathway-step">
         <div class="step-number">01</div>
         <div>
-          <strong>初始模型</strong>
-          <p>近视相关状态 vs 健康</p>
+          <strong>Stage 1 model</strong>
+          <p>Myopia-affected vs healthy</p>
           <span>Threshold 0.575</span>
         </div>
       </div>
@@ -290,25 +288,19 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       <div class="pathway-step">
         <div class="step-number">02</div>
         <div>
-          <strong>条件模型</strong>
-          <p>近视–干眼共病 vs 单纯近视</p>
+          <strong>Stage 2 model</strong>
+          <p>Myopia–dry eye comorbidity vs myopia alone</p>
           <span>Threshold 0.150</span>
         </div>
       </div>
-      <div class="privacy-chip"><span>✓</span> 无数据库 · 无账号 · 无上传</div>
     </aside>
-  </section>
-
-  <section class="notice" aria-label="重要提示">
-    <span class="notice-icon">!</span>
-    <p><strong>研究演示工具：</strong>结果仅用于问卷风险分层和科研展示，不能替代眼科检查、临床诊断或治疗建议。</p>
   </section>
 
   <section class="calculator-shell" id="calculator">
     <div class="section-heading">
       <div>
         <p class="kicker">Questionnaire</p>
-        <h2>填写问卷信息</h2>
+        <h2>Questionnaire items</h2>
       </div>
       <div class="completion" aria-live="polite">
         <span id="completionCount">0/15</span>
@@ -320,9 +312,8 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       <div id="questionGroups"></div>
       <p class="form-message" id="formMessage" role="alert" hidden></p>
       <div class="form-actions">
-        <button class="calculate-button" type="submit">计算风险分层 <span aria-hidden="true">→</span></button>
-        <button class="reset-button" type="button" id="resetButton">清空重填</button>
-        <p>点击计算即表示您已了解该工具仅用于研究演示。</p>
+        <button class="calculate-button" type="submit">Calculate <span aria-hidden="true">→</span></button>
+        <button class="reset-button" type="button" id="resetButton">Reset</button>
       </div>
     </form>
   </section>
@@ -332,39 +323,35 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
   <section class="method" id="method">
     <div class="method-heading">
       <p class="kicker">How it works</p>
-      <h2>透明、锁定、可复核的计算路径</h2>
-      <p>模型不会在网页中重新训练、更新系数或调整阈值。</p>
+          <h2>Two-stage logistic pathway</h2>
     </div>
     <div class="method-grid">
-      <article><span>01</span><h3>浏览器本地计算</h3><p>问卷选项仅参与当前页面计算，不发送至服务器，也不写入浏览器存储。</p></article>
-      <article><span>02</span><h3>锁定Logistic模型</h3><p>使用论文中固定的两阶段截距、回归系数、编码方案和分类阈值。</p></article>
-      <article><span>03</span><h3>顺序风险分层</h3><p>先判断是否进入近视相关分支，再使用条件模型区分单纯近视与共病风险。</p></article>
+      <article><span>01</span><h3>Stage 1</h3><p>Estimates the probability of a myopia-affected state versus healthy status.</p></article>
+      <article><span>02</span><h3>Stage 2</h3><p>Estimates the conditional probability of recorded comorbidity versus myopia alone.</p></article>
+      <article><span>03</span><h3>Linked assignment</h3><p>Records below the Stage 1 threshold are assigned healthy; remaining records are assigned by the Stage 2 threshold.</p></article>
     </div>
     <details>
-      <summary>查看概率公式与版本信息</summary>
+      <summary>Probability formulas and version</summary>
       <div class="formula-grid">
-        <code>P(健康) = 1 − pA</code>
-        <code>P(单纯近视) = pA × (1 − pC|A)</code>
-        <code>P(共病) = pA × pC|A</code>
+        <code>P(healthy) = 1 − pA</code>
+        <code>P(myopia alone) = pA × (1 − pC|A)</code>
+        <code>P(comorbidity) = pA × pC|A</code>
       </div>
-      <p>模型版本：2026-07-22；Stage 1阈值：0.575；Stage 2阈值：0.150。</p>
+      <p>Model version: 2026-07-22; Stage 1 threshold: 0.575; Stage 2 threshold: 0.150.</p>
     </details>
   </section>
 
   <footer>
-    <div><strong>Vision Triage</strong><span>Questionnaire-based research prototype</span></div>
-    <p>本工具不收集个人信息，不提供诊断，不构成医疗建议。如有视力下降、眼干、疼痛或其他不适，请及时接受专业眼科检查。</p>
+        <div><strong>Vision Triage</strong><span>Stage 1 and Stage 2 questionnaire calculator</span></div>
   </footer>
 </main>
 
 <script type="application/json" id="model-data">{
   "model_key": "Traditional_TwoStage_Logistic_Tuned",
-  "model_name": "Locked hierarchical Logistic research prototype",
-  "description": "Privacy-sanitized browser-based research demonstration of the locked hierarchical Logistic pathway. This prototype reproduces initial-model, conditional-model, and final three-category probabilities from fixed coefficients and thresholds without refitting or recalibration.",
+    "model_name": "Stage 1 and Stage 2 logistic pathway",
+    "description": "Stage 1 and Stage 2 logistic models with the reported coefficients and thresholds.",
   "notes": [
-    "The browser tool is a locked-parameter research prototype, not a clinical validation result.",
-    "The fitted conditional model is evaluated for every input profile during linked inference; its threshold affects the final label only after Stage 1 routes the record to the myopia-affected branch.",
-    "No participant-level validation records are included in this public version."
+    "The fitted Stage 2 model is evaluated for every input profile during linked inference; its threshold affects the final label only after Stage 1 routes the record to the myopia-affected branch."
   ],
   "thresholds": {
     "stage1_affected": 0.575,
@@ -403,15 +390,15 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "城区"
+          "label": "Urban"
         },
         {
           "value": "2",
-          "label": "郊区"
+          "label": "Suburban"
         },
         {
           "value": "3",
-          "label": "农村"
+          "label": "Rural"
         }
       ],
       "stages": [
@@ -427,23 +414,23 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "≤6"
+          "label": "≤6 years"
         },
         {
           "value": "2",
-          "label": "7-9"
+          "label": "7–9 years"
         },
         {
           "value": "3",
-          "label": "10-12"
+          "label": "10–12 years"
         },
         {
           "value": "4",
-          "label": "13-15"
+          "label": "13–15 years"
         },
         {
           "value": "5",
-          "label": "≥16"
+          "label": "≥16 years"
         }
       ],
       "stages": [
@@ -460,19 +447,19 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "<1小时"
+          "label": "<1 h/day"
         },
         {
           "value": "2",
-          "label": "1-2小时"
+          "label": "1–2 h/day"
         },
         {
           "value": "3",
-          "label": "2-3小时"
+          "label": "2–3 h/day"
         },
         {
           "value": "4",
-          "label": ">3小时"
+          "label": ">3 h/day"
         }
       ],
       "stages": [
@@ -488,19 +475,19 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "<6"
+          "label": "<6 h/day"
         },
         {
           "value": "2",
-          "label": "6-8"
+          "label": "6–8 h/day"
         },
         {
           "value": "3",
-          "label": "8-10"
+          "label": "8–10 h/day"
         },
         {
           "value": "4",
-          "label": ">10"
+          "label": ">10 h/day"
         }
       ],
       "stages": [
@@ -516,19 +503,19 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "＜3小时"
+          "label": "<3 h/day"
         },
         {
           "value": "2",
-          "label": "3-4小时"
+          "label": "3–4 h/day"
         },
         {
           "value": "3",
-          "label": "5-6小时"
+          "label": "5–6 h/day"
         },
         {
           "value": "4",
-          "label": "＞6小时"
+          "label": ">6 h/day"
         }
       ],
       "stages": [
@@ -545,19 +532,19 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "0次"
+          "label": "None"
         },
         {
           "value": "2",
-          "label": "1次"
+          "label": "Once"
         },
         {
           "value": "3",
-          "label": "2次"
+          "label": "Twice"
         },
         {
           "value": "4",
-          "label": "≥3次"
+          "label": "≥3 times"
         }
       ],
       "stages": [
@@ -573,19 +560,19 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "0",
-          "label": "从不"
+          "label": "Never"
         },
         {
           "value": "1",
-          "label": "很少"
+          "label": "Rarely"
         },
         {
           "value": "2",
-          "label": "有时"
+          "label": "Sometimes"
         },
         {
           "value": "3",
-          "label": "经常"
+          "label": "Often"
         }
       ],
       "stages": [
@@ -601,11 +588,11 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "0",
-          "label": "男"
+          "label": "Male"
         },
         {
           "value": "1",
-          "label": "女"
+          "label": "Female"
         }
       ],
       "stages": [
@@ -622,23 +609,23 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "体育运动"
+          "label": "Sports"
         },
         {
           "value": "2",
-          "label": "玩耍"
+          "label": "Play"
         },
         {
           "value": "3",
-          "label": "骑自行车"
+          "label": "Cycling"
         },
         {
           "value": "4",
-          "label": "野餐"
+          "label": "Picnic / outing"
         },
         {
           "value": "5",
-          "label": "其他"
+          "label": "Other"
         }
       ],
       "stages": [
@@ -654,27 +641,27 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "小学及以下"
+          "label": "Primary school or below"
         },
         {
           "value": "2",
-          "label": "初中"
+          "label": "Junior high school"
         },
         {
           "value": "3",
-          "label": "高中/中专"
+          "label": "Senior high / vocational school"
         },
         {
           "value": "4",
-          "label": "大专"
+          "label": "Junior college"
         },
         {
           "value": "5",
-          "label": "本科"
+          "label": "Bachelor's degree"
         },
         {
           "value": "6",
-          "label": "研究生"
+          "label": "Postgraduate"
         }
       ],
       "stages": [
@@ -690,15 +677,15 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "从不"
+          "label": "Never"
         },
         {
           "value": "2",
-          "label": "偶尔"
+          "label": "Occasionally"
         },
         {
           "value": "3",
-          "label": "经常"
+          "label": "Often"
         }
       ],
       "stages": [
@@ -714,23 +701,23 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "早晨"
+          "label": "Morning"
         },
         {
           "value": "2",
-          "label": "中午"
+          "label": "Noon"
         },
         {
           "value": "3",
-          "label": "下午"
+          "label": "Afternoon"
         },
         {
           "value": "4",
-          "label": "傍晚"
+          "label": "Evening"
         },
         {
           "value": "5",
-          "label": "晚上"
+          "label": "Night"
         }
       ],
       "stages": [
@@ -746,15 +733,15 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "纸质书籍为主"
+          "label": "Mainly printed books"
         },
         {
           "value": "2",
-          "label": "电子屏幕（手机、平板、电脑等）为主"
+          "label": "Mainly electronic screens"
         },
         {
           "value": "3",
-          "label": "都有，时间差不多"
+          "label": "Printed books and screens equally"
         }
       ],
       "stages": [
@@ -770,11 +757,11 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "0",
-          "label": "否"
+          "label": "No"
         },
         {
           "value": "1",
-          "label": "是"
+          "label": "Yes"
         }
       ],
       "stages": [
@@ -790,19 +777,19 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       "options": [
         {
           "value": "1",
-          "label": "非常重"
+          "label": "Very heavy"
         },
         {
           "value": "2",
-          "label": "较重"
+          "label": "Quite heavy"
         },
         {
           "value": "3",
-          "label": "适中"
+          "label": "Moderate"
         },
         {
           "value": "4",
-          "label": "较轻"
+          "label": "Light"
         }
       ],
       "stages": [
@@ -812,8 +799,8 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
   },
   "stages": {
     "stage1": {
-      "display_name": "Initial model: myopia-affected versus healthy",
-      "outcome_name": "Affected risk",
+      "display_name": "Stage 1: myopia-affected versus healthy",
+      "outcome_name": "Stage 1 probability",
       "variables": [
         "Age",
         "Gender",
@@ -917,8 +904,8 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       }
     },
     "stage2": {
-      "display_name": "Conditional model: myopia–dry eye comorbidity versus myopia alone",
-      "outcome_name": "Conditional comorbidity risk",
+      "display_name": "Stage 2: myopia–dry eye comorbidity versus myopia alone",
+      "outcome_name": "Stage 2 probability",
       "variables": [
         "Age",
         "Gender",
@@ -1014,12 +1001,12 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
 
   var GROUPS = [
     {
-      title: "基本信息",
+      title: "Background",
       eyebrow: "Participant profile",
       variables: ["Age", "Gender", "Address", "Mother_Education_Level"]
     },
     {
-      title: "学习与近距离用眼",
+      title: "Study and near work",
       eyebrow: "Study & near-work",
       variables: [
         "Daily_Study_Time",
@@ -1030,7 +1017,7 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       ]
     },
     {
-      title: "睡眠与户外活动",
+      title: "Sleep and outdoor activity",
       eyebrow: "Sleep & outdoor activity",
       variables: [
         "Daily_Sleep_Duration",
@@ -1044,44 +1031,44 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
   ];
 
   var LABELS = {
-    Age: "年龄",
-    Gender: "性别",
-    Address: "居住地区",
-    Mother_Education_Level: "母亲受教育程度",
-    Daily_Study_Time: "每日学习时间",
-    School_Academic_Burden: "学校学习负担",
-    Reads_Writes_Continuously: "是否连续读写超过1小时",
-    Reading_Method: "主要阅读方式",
-    Frequent_Study_Stress_or_Anxiety: "学习压力或焦虑频率",
-    Daily_Sleep_Duration: "每日睡眠时间",
-    Naps: "午睡习惯",
-    Daily_Outdoor_Time: "每日户外活动时间",
-    Outdoor_Activity_Time: "通常户外活动时段",
-    Main_Types_of_Outdoor_Activities: "主要户外活动类型",
-    Frequency_Eye_Exercises: "眼保健操频率"
+    Age: "Age",
+    Gender: "Sex",
+    Address: "Residential region",
+    Mother_Education_Level: "Mother's education",
+    Daily_Study_Time: "Daily study time",
+    School_Academic_Burden: "School academic burden",
+    Reads_Writes_Continuously: "Continuous reading or writing >1 h",
+    Reading_Method: "Main reading method",
+    Frequent_Study_Stress_or_Anxiety: "Study-related stress or anxiety",
+    Daily_Sleep_Duration: "Daily sleep duration",
+    Naps: "Napping habit",
+    Daily_Outdoor_Time: "Daily outdoor time",
+    Outdoor_Activity_Time: "Usual outdoor-activity period",
+    Main_Types_of_Outdoor_Activities: "Main outdoor activity",
+    Frequency_Eye_Exercises: "Eye-exercise frequency"
   };
 
   var RESULT_COPY = {
     0: {
-      title: "健康风险分层",
+      title: "Healthy stratum",
       english: "Healthy risk stratum",
       tone: "healthy",
       symbol: "H",
-      note: "当前问卷特征未达到模型的近视相关风险分支阈值。"
+        note: "The Stage 1 probability is below the Stage 1 threshold."
     },
     1: {
-      title: "近视风险分层",
+      title: "Myopia-alone stratum",
       english: "Myopia-alone risk stratum",
       tone: "myopia",
       symbol: "M",
-      note: "模型进入近视相关分支，但未达到共病风险分支阈值。"
+      note: "The profile crosses the Stage 1 threshold and remains below the Stage 2 threshold."
     },
     2: {
-      title: "近视–干眼共病风险分层",
+      title: "Myopia–dry eye comorbidity stratum",
       english: "Myopia–dry eye comorbidity risk stratum",
       tone: "comorbidity",
       symbol: "C",
-      note: "模型同时达到近视相关分支和条件共病分支阈值，建议进一步规范检查。"
+      note: "The profile crosses both the Stage 1 and Stage 2 thresholds."
     }
   };
 
@@ -1130,7 +1117,7 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
 
   function displayOption(variable, option) {
     if (variable === "Main_Types_of_Outdoor_Activities" && option.value === "5") {
-      return "其他";
+      return "Other";
     }
     return option.label;
   }
@@ -1167,14 +1154,13 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
 
         var labelText = el("span", "field-label");
         labelText.appendChild(el("span", null, LABELS[variable]));
-        labelText.appendChild(el("small", null, config.label_en));
         label.appendChild(labelText);
 
         var selectWrap = el("span", "select-wrap");
         var select = document.createElement("select");
         select.id = "field-" + variable;
         select.setAttribute("aria-required", "true");
-        select.appendChild(new Option("请选择", ""));
+        select.appendChild(new Option("Select", ""));
         config.options.forEach(function (option) {
           select.appendChild(new Option(displayOption(variable, option), option.value));
         });
@@ -1245,8 +1231,8 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
 
     var readouts = el("div", "stage-readouts");
     [
-      ["初始模型概率", percent(result.stage1), "阈值 57.5%"],
-      ["条件模型概率", percent(result.stage2), "阈值 15.0%"]
+      ["Stage 1 probability", percent(result.stage1), "Threshold 57.5%"],
+      ["Stage 2 probability", percent(result.stage2), "Threshold 15.0%"]
     ].forEach(function (row) {
       var box = document.createElement("div");
       box.appendChild(el("span", null, row[0]));
@@ -1258,11 +1244,11 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
     section.appendChild(summary);
 
     var card = el("div", "probability-card");
-    card.appendChild(el("h3", null, "三分类组合概率"));
+    card.appendChild(el("h3", null, "Linked three-category probabilities"));
     [
-      ["健康", result.probabilities.healthy, "bar-healthy"],
-      ["单纯近视", result.probabilities.myopia, "bar-myopia"],
-      ["近视–干眼共病", result.probabilities.comorbidity, "bar-comorbidity"]
+      ["Healthy", result.probabilities.healthy, "bar-healthy"],
+      ["Myopia alone", result.probabilities.myopia, "bar-myopia"],
+      ["Myopia–dry eye comorbidity", result.probabilities.comorbidity, "bar-comorbidity"]
     ].forEach(function (row) {
       var wrapper = el("div", "probability-row");
       var head = document.createElement("div");
@@ -1277,7 +1263,7 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       wrapper.appendChild(track);
       card.appendChild(wrapper);
     });
-    card.appendChild(el("p", null, "概率之和为100%；最终分层采用顺序阈值规则，不按最大概率直接分类。"));
+    card.appendChild(el("p", null, "Probabilities sum to 100%. Category assignment uses sequential thresholds rather than argmax."));
     section.appendChild(card);
 
     mount.appendChild(section);
@@ -1289,7 +1275,7 @@ footer p { max-width: 750px; margin: 0; text-align: right; font-size: 10px; line
       return !values[variable];
     });
     if (missing.length) {
-      showMessage("请先完成全部项目，当前还有 " + missing.length + " 项未填写。");
+      showMessage("Complete all 15 items. " + missing.length + " remaining.");
       clearResult();
       var first = document.getElementById("field-" + missing[0]);
       if (first) { first.focus(); }
